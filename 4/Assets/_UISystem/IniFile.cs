@@ -54,11 +54,13 @@ public class IniFile
 	// load a exist file, otherwise, return false
 	public bool Load_File(string fileName)
 	{
+
+		fileFullName = fileName;
+
 		// file NOT exist
 		if (!System.IO.File.Exists(fileName))
 			return false;
 
-		fileFullName = fileName;
 
 		StreamReader sr = new StreamReader(fileFullName);
 
@@ -166,7 +168,7 @@ public class IniFile
 	}
 
 	// create section, if exist, update the comment
-	public bool Create_Section(string section, string comment)
+	public bool Create_Section(string section, string comment = "")
 	{
 		if (Is_Section(section))
 		{
@@ -318,6 +320,27 @@ public class IniFile
 		}
 		return ret.ToArray();
 	}
+
+	public string[] Get_All_Pair_Names()
+	{
+		List<string> ret = new List<string>();
+		foreach(string key in current_section.pairs.Keys)
+		{
+			ret.Add(key);
+		}
+		return ret.ToArray(); 
+	}
+
+	public string[] Get_All_Pair_Values()
+	{
+		List<string> ret = new List<string>();
+		foreach(string key in current_section.pairs.Keys)
+		{
+			ret.Add(current_section.pairs[key].value);
+		}
+		return ret.ToArray(); 
+	}
+
 
 }
 
